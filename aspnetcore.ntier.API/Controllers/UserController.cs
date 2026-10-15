@@ -36,7 +36,7 @@ public class UserController(IUserService userService) : ControllerBase
         }
         catch (Exception)
         {
-            return BadRequest("Something went wrong");
+            return BadRequest("Something went wrong");//satyam
         }
     }
 
@@ -71,6 +71,24 @@ public class UserController(IUserService userService) : ControllerBase
     }
 
     [HttpDelete("deleteuser")]
+    public async Task<IActionResult> DeleteUser(int userId)
+    {
+        try
+        {
+            await userService.DeleteUserAsync(userId);
+            return Ok();
+        }
+        catch (UserNotFoundException)
+        {
+            return NotFound("User not found");
+        }
+        catch (Exception)
+        {
+            return BadRequest("Something went wrong");
+        }
+    }
+
+    //HttpDelete("alter")]
     public async Task<IActionResult> DeleteUser(int userId)
     {
         try
